@@ -110,6 +110,8 @@ impl SiConstant {
     }
 }
 
+#[derive(Debug)]
+
 struct Value{
     magnitude: f64,
     si_units_num: Vec<SiUnit>,
@@ -279,6 +281,7 @@ impl Clone for Value{
     }
 }
 
+#[derive(Debug)]
 struct Vector {
     value:Value,
     theta: f64
@@ -363,6 +366,12 @@ fn main(){
     let g:Value = SiConstant::GravitationalConstant.get_value() * earth_mass /earth_radius.clone() / earth_radius;
     let test = g.same(&DerivedQuantities::Accleration.get_value());
     println!("{} {}",g,test);
+
+    let car1 = Vector{value:DerivedQuantities::Scalar.get_value(), theta:0_f64};
+    let car2 = Vector{value:DerivedQuantities::Scalar.get_value(), theta: 1.5*PI};
+    let res = car1+car2;
+
+    println!("{:?} {}",res, res.theta.to_degrees());
 
 }
 
