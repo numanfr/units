@@ -1,5 +1,5 @@
 use core::fmt;
-use std::ops::{Mul, Div, Add};
+use std::{ops::{Mul, Div, Add, Rem}, f64::consts::PI};
 
 #[derive(Debug,Hash,PartialEq,Eq,Clone,Copy,PartialOrd,Ord)]
 enum SiUnit {
@@ -279,7 +279,83 @@ impl Clone for Value{
     }
 }
 
+struct Vector {
+    value:Value,
+    theta: f64
+}
 
+impl  Mul<Vector> for Vector{
+    type Output = Self;
+    fn mul(self, rhs: Vector) -> Self::Output {
+        Self{value: self.value*rhs.value,theta: (self.theta+rhs.theta).rem(2_f64*PI)}
+    }
+}
+
+impl Mul<Value> for Vector {
+    type Output = Vector;
+    fn mul(self, rhs: Value) -> Self::Output {
+        Self::Output{value: self.value * rhs, ..self}
+    }
+}
+
+impl Mul<Vector> for Value {
+    type Output = Vector;
+    fn mul(self, rhs: Vector) -> Self::Output {
+        Self::Output{value: self * rhs.value, ..rhs}
+    }
+}
+
+impl Add<Vector> for Vector{
+    type Output = Vector;
+    fn add(self, rhs: Vector) -> Self::Output {
+        let cs:Cartesian = self.into();
+        let cr:Cartesian = rhs.into();
+        let f:Self::Output = (cs+cr).into();
+        f
+        
+    }
+}
+
+struct Cartesian{
+    x:f64,
+    y:f64,
+    num: Vec<SiUnit>,
+    den: Vec<SiUnit>
+}
+
+impl From<Vector> for Cartesian{
+    fn from(value: Vector) -> Self {
+        Self{x:value.value.magnitude*value.theta.cos(),y:value.value.magnitude*value.theta.sin(),num:value.value.si_units_num,den:value.value.si_units_den}
+    }
+}
+
+impl Add<Cartesian> for Cartesian {
+    type Output = Cartesian;
+    fn add(self, rhs: Cartesian) -> Self::Output {
+        if self.num.len() == rhs.num.len(){
+            for i in 0..self.num.len(){
+                if !(self.num[i] == rhs.num[i]){
+                    panic!("Units not identical");
+                }
+            }
+        }
+        if self.den.len() == rhs.den.len() {
+            for i in 0..self.den.len(){
+                if !(self.den[i] == rhs.den[i]){
+                    panic!("Units not identical");
+                }
+            }
+        }
+
+        Self{x: self.x + rhs.x,y: self.y + rhs.y,..self}
+    }
+}
+
+impl From<Cartesian> for Vector{
+    fn from(value: Cartesian) -> Self {
+        Self{value:Value{magnitude: (value.x.powi(2) + value.y.powi(2)).sqrt(),si_units_num: value.num,si_units_den: value.den }, theta: (value.y/value.x).atan()}
+    }
+}
 
 fn main(){
     let earth_mass: Value = DerivedQuantities::Mass.get_value().set_magnitude(5.972e24_f64);
@@ -287,6 +363,7 @@ fn main(){
     let g:Value = SiConstant::GravitationalConstant.get_value() * earth_mass /earth_radius.clone() / earth_radius;
     let test = g.same(&DerivedQuantities::Accleration.get_value());
     println!("{} {}",g,test);
+
 }
 
 //Test wwweeerrr
