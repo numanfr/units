@@ -327,8 +327,8 @@ struct Cartesian{
 }
 
 impl From<Vector> for Cartesian{
-    fn from(value: Vector) -> Self {
-        Self{x:value.value.magnitude*value.theta.cos(),y:value.value.magnitude*value.theta.sin(),num:value.value.si_units_num,den:value.value.si_units_den}
+    fn from(other: Vector) -> Self {
+        Self{x:other.value.magnitude*other.theta.cos(),y:other.value.magnitude*other.theta.sin(),num:other.value.si_units_num,den:other.value.si_units_den}
     }
 }
 
@@ -356,7 +356,27 @@ impl Add<Cartesian> for Cartesian {
 
 impl From<Cartesian> for Vector{
     fn from(value: Cartesian) -> Self {
-        Self{value:Value{magnitude: (value.x.powi(2) + value.y.powi(2)).sqrt(),si_units_num: value.num,si_units_den: value.den }, theta: (value.y/value.x).atan()}
+        Self{value:Value{magnitude: (value.x.powi(2) + value.y.powi(2)).sqrt(),si_units_num: value.num,si_units_den: value.den }, theta: Vector::get_angle(value.x, value.y).rem(2_f64*PI)-2_f64*PI }
+    }
+}
+
+impl Clone for Vector{
+    fn clone(&self) -> Self {
+        Self{value:self.value.clone(),theta: self.theta}
+    }
+}
+
+impl Vector {
+    fn get_angle(x:f64,y:f64) -> f64{
+        if(x.is_sign_positive() && y.is_sign_positive()){
+            (y/x).atan()
+        }else if x.is_sign_positive() && y.is_sign_negative() {
+            (y/x).atan() + 2_f64*PI
+        } else if x.is_sign_negative() && y.is_sign_positive() {
+            (y/x).atan() + PI
+        }else{
+            (y/x).atan() + PI
+        }
     }
 }
 
@@ -370,8 +390,17 @@ fn main(){
     let car1 = Vector{value:DerivedQuantities::Scalar.get_value(), theta:0_f64};
     let car2 = Vector{value:DerivedQuantities::Scalar.get_value(), theta: 1.5*PI};
     let res = car1+car2;
-
     println!("{:?} {}",res, res.theta.to_degrees());
+
+    let super_heavy_truck = Vector{value:DerivedQuantities::Scalar.get_value().set_magnitude(1e8_f64), theta:-1_f64*PI+0_f64};
+    let res = super_heavy_truck+res;
+    println!("{:?} {}",res, res.theta.to_degrees());
+
+    let one_unit = Vector{value:DerivedQuantities::Scalar.get_value().set_magnitude(1_f64), theta:0_f64.to_radians()};
+    let other_unit = Vector{value:DerivedQuantities::Scalar.get_value().set_magnitude(2_f64), theta:-180.0_f64.to_radians()};
+    let res = other_unit + one_unit;
+    println!("{:?} {}",res, res.theta.to_degrees());
+
 
 }
 
