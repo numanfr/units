@@ -126,6 +126,10 @@ impl Value {
         return unit.si_units_num.len() == 0 && unit.si_units_den.len() == 0;
     }
 
+    fn set_magnitude(self,new_mag:f64) -> Self{
+        Self{magnitude: new_mag,..self}
+    }
+
     fn add_num(mut self,unit:SiUnit) -> Self{
         self.si_units_num.push(unit);
         self.simplify()
@@ -278,9 +282,9 @@ impl Clone for Value{
 
 
 fn main(){
-    let earth_mass = DerivedQuantities::Mass.get_value() * 5.972e24;
-    let earth_radius = DerivedQuantities::Distance.get_value() * 6_371_000_f64;
-    let mut g:Value = SiConstant::GravitationalConstant.get_value() * earth_mass /earth_radius.clone() / earth_radius;
+    let earth_mass: Value = DerivedQuantities::Mass.get_value().set_magnitude(5.972e24_f64);
+    let earth_radius = DerivedQuantities::Distance.get_value().set_magnitude(6_371_000_f64);
+    let g:Value = SiConstant::GravitationalConstant.get_value() * earth_mass /earth_radius.clone() / earth_radius;
     let test = g.same(&DerivedQuantities::Accleration.get_value());
     println!("{} {}",g,test);
 }
