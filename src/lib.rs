@@ -14,5 +14,3 @@ pub use crate::derived_units::DerivedUnit;
 pub use crate::si_constants::SiConstant;
 pub use crate::vector::Vector;
 pub use crate::cartesian::Cartesian;
-
-//Test wwweeerrr
