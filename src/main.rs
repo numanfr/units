@@ -1,4 +1,3 @@
-use std::f64::consts::PI;
 pub mod si_unit;
 pub mod derived_quantities;
 pub mod value;
@@ -7,13 +6,14 @@ pub mod si_constants;
 pub mod vector;
 pub mod cartesian;
 
-use crate::derived_quantities::derived_q_mod::DerivedQuantities;
-use crate::si_unit::si_mod::SiUnit;
-use crate::value::value_mod::Value;
-use crate::derived_units::derived_units_mod::DerivedUnit;
-use crate::si_constants::si_constants_mod::SiConstant;
-use crate::vector::vector_mod::Vector;
-use crate::cartesian::cartesian_mod::Cartesian;
+use std::f64::consts::PI;
+use crate::derived_quantities::DerivedQuantities;
+use crate::si_unit::SiUnit;
+use crate::value::Value;
+use crate::derived_units::DerivedUnit;
+use crate::si_constants::SiConstant;
+use crate::vector::Vector;
+use crate::cartesian::Cartesian;
 
 
 
