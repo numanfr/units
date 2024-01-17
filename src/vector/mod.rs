@@ -60,12 +60,15 @@ impl Add<Vector> for Vector{
         let cr:Cartesian = rhs.into();
         let f:Self::Output = (cs+cr).into();
         f
-        
     }
 }
 impl From<Cartesian> for Vector{
     fn from(value: Cartesian) -> Self {
-        Self{value:Value{magnitude: (value.x.powi(2) + value.y.powi(2)).sqrt(),si_units_num: value.num,si_units_den: value.den }, theta: Vector::get_angle(value.x, value.y).rem(2_f64*PI)-2_f64*PI }
+        Self{value:Value{
+            magnitude: (value.x.powi(2) + value.y.powi(2)).sqrt(),
+            si_units_num: value.num,si_units_den: value.den },
+            theta: Vector::get_angle(value.x, value.y) 
+        }
     }
 }
 
@@ -76,7 +79,7 @@ impl Clone for Vector{
 }
 
 impl Vector {
-    fn get_angle(x:f64,y:f64) -> f64{
+    pub fn get_angle(x:f64,y:f64) -> f64{
         if x.is_sign_positive() && y.is_sign_positive() {
             (y/x).atan()
         }else if x.is_sign_positive() && y.is_sign_negative() {
