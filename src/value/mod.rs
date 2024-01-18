@@ -6,8 +6,11 @@ use crate::si_unit::SiUnit;
 #[derive(Debug)]
 /// Struct that represents a value with units
 pub struct Value{
+    ///Magnitude of Value
     pub magnitude: f64,
+    ///Numerator
     pub si_units_num: Vec<SiUnit>,
+    ///Denominator
     pub si_units_den: Vec<SiUnit>
 
 }
@@ -17,7 +20,7 @@ impl Value {
 /// let v1 = DerivedUnits::Hertz.get_value();
 /// let v2 = DerivedUnits::Newtons.get_value();
 /// assert_eq!(v1.same(v2),False);
-/// `
+/// 
     pub fn same(&self,other: &Value) -> bool{
         let new_self = self.clone();
         let new_other = other.clone();

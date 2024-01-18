@@ -6,13 +6,21 @@ use crate::Value;
 /// Enum of derived units 
 #[derive(Debug,Hash,PartialEq,Eq,Clone,Copy,PartialOrd,Ord)]
 pub enum DerivedUnit {
+    ///Hertz
     Hertz,
+    ///Newtons
     Newtons,
+    ///Pascals
     Pascals,
+    ///Joules
     Joules,
+    ///Watts
     Watts,
+    ///Volts
     Volts,
+    ///Coulombs
     Coulombs,
+    ///Sieverts
     Sieverts
 }
 

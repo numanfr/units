@@ -1,6 +1,6 @@
 #![warn(missing_docs)]
 
-
+//! A crate that allows you to manipulate vectors and values with SI units. 
 ///Si Units
 pub mod si_unit;
 
@@ -25,6 +25,7 @@ pub mod cartesian;
 ///Archimedes Constant (PI)
 pub use std::f64::consts::PI;
 
+///Export documentation
 pub use crate::derived_quantities::DerivedQuantities;
 pub use crate::si_unit::SiUnit;
 pub use crate::value::Value;

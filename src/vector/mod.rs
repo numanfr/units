@@ -5,8 +5,11 @@ use crate::Cartesian;
 
 
 #[derive(Debug)]
+/// A struct that holds a Value struct and direction
 pub struct Vector {
+    ///Value Struct
     pub value:Value,
+    ///Angle of Vector in radians
     pub theta: f64
 }
 
@@ -79,6 +82,7 @@ impl Clone for Vector{
 }
 
 impl Vector {
+    ///Returns angle from x,y coordinates
     pub fn get_angle(x:f64,y:f64) -> f64{
         if x.is_sign_positive() && y.is_sign_positive() {
             (y/x).atan()
