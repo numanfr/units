@@ -1,5 +1,7 @@
 use crate::value::Value;
 use crate::si_unit::SiUnit;
+
+///Enum of Quantities derived from SiUnits
 pub enum DerivedQuantities {
     Speed,
     Velocity,
@@ -14,6 +16,11 @@ pub enum DerivedQuantities {
 }
 
 impl DerivedQuantities {
+/// Get a Value struct from from a derived quantitiy
+/// ```rust
+/// let time_limit = DerivedQuantities::Speed.get_value().set_magnitude(30);
+/// println!("{}",time_limit);
+/// `
     pub fn get_value(&self) -> Value {
         match *self {
             DerivedQuantities::Speed => Value{magnitude: 1_f64,si_units_num: Vec::from([SiUnit::Metres]),si_units_den: Vec::from([SiUnit::Seconds])},

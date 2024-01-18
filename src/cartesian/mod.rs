@@ -2,13 +2,30 @@
 use crate::{SiUnit,Vector};
 use core::ops::Add;
 #[derive(Debug)]
+///Cartesian coordinates struct
 pub struct Cartesian{
+    ///x coordinates
     pub x:f64,
+    ///y coordinates
     pub y:f64,
+    ///Numerator Vector of SiUnits
     pub num: Vec<SiUnit>,
+    ///Denominator Vector of SiUnits
     pub den: Vec<SiUnit>
 }
-
+///Transform Vector to Cartesian
+/// ```rust
+/// let v = Vector{
+///     value:Value{
+///         magnitude:1_f64,
+///         si_units_num: Vec::from([SiUnit::Kilogram,SiUnit::Metres])
+///         si_units_den: Vec::from([SiUnit::Seconds,SiUnit::Seconds])
+///     }
+///     theta:crate::PI
+/// };
+/// let cart:Cartesian = v.into()
+///println!("{}",cart);
+/// ```
 impl From<Vector> for Cartesian{
     fn from(other: Vector) -> Self {
         Self{x:other.value.magnitude*other.theta.cos(),
@@ -18,6 +35,11 @@ impl From<Vector> for Cartesian{
     }
 }
 
+
+/// ```rust
+/// let c1 = Cartesian{x: 1,y: 0,num: Vec::<SiUnit>::from([]),den: Vec::<SiUnit>::from([])}
+/// let c2 = Cartesian{x: 1,y: 0,num: Vec::<SiUnit>::from([]),den: Vec::<SiUnit>::from([])}
+/// println!("{}",c1+c2);
 impl Add<Cartesian> for Cartesian {
     type Output = Cartesian;
     fn add(self, rhs: Cartesian) -> Self::Output {
