@@ -90,6 +90,29 @@ impl Value {
         (x,y)
     }
     
+    /// Allows raising Value to int power;
+    pub fn powi(self,pow:i32) -> Self{
+
+        let new_mag = self.magnitude.powi(pow);
+        let mut new_num = Vec::<SiUnit>::new();
+        let mut new_den = Vec::<SiUnit>::new();
+
+        for _ in 0..pow{
+            new_num.append(&mut self.si_units_num.clone());
+            new_den.append(&mut self.si_units_den.clone());
+
+        }
+        Self{magnitude: new_mag,si_units_num: new_num,si_units_den: new_den}
+    }
+
+    /// Preform addition in a safe way
+    pub fn safe_add(self,rhs:Value) -> Result<Value,&'static str>{
+        if self.same(&rhs){
+            Ok(self + rhs)
+        }else {
+            Err("Units not Identical")
+        }
+    }
 
 }
 
@@ -164,8 +187,7 @@ impl Div<f64> for Value{
     fn div(self, rhs: f64) -> Self::Output {
         Self{magnitude: self.magnitude/rhs,..self}
     }
-}
-
+} 
 impl Add<Value> for Value{
     type Output = Value;
     fn add(self, rhs: Self) -> Self::Output {

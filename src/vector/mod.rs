@@ -1,4 +1,5 @@
 
+use core::fmt;
 use std::{ops::{Mul, Div, Add, Rem}, f64::consts::PI};
 use crate::Value;
 use crate::Cartesian;
@@ -78,6 +79,12 @@ impl From<Cartesian> for Vector{
 impl Clone for Vector{
     fn clone(&self) -> Self {
         Self{value:self.value.clone(),theta: self.theta}
+    }
+}
+
+impl fmt::Display for Vector{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f,"{},  {} radians",self.value,self.theta)
     }
 }
 

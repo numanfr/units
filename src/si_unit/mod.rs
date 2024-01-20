@@ -6,10 +6,10 @@ use core::fmt;
 pub enum SiUnit {
 
     ///Metres
-    Metres,
+    Metre,
 
     ///Seconds
-    Seconds,
+    Second,
 
     ///Kilogram
     Kilogram,
@@ -38,8 +38,8 @@ impl fmt::Display for SiUnit {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             SiUnit::Kilogram => write!(f,"Kilogram"),
-            SiUnit::Metres => write!(f,"Metres"),
-            SiUnit::Seconds => write!(f,"Seconds"),
+            SiUnit::Metre => write!(f,"Metre"),
+            SiUnit::Second => write!(f,"Second"),
             SiUnit::Ampere => write!(f,"Ampere"),
             SiUnit::Kelvin => write!(f,"Kelvin"),
             SiUnit::Mole => write!(f,"Mole"),
