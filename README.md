@@ -2,6 +2,15 @@
 
 ## Enum of si units
 ### Prevents misspelling and increases code readability
+
+1. Metre
+2. Second
+3. Kilogram
+4. Ampere
+5. Kelvin
+6. Mole
+7. Candela
+
 #### You can print them
 
 ```
@@ -40,6 +49,31 @@ println!("Speed is {}",speed);
 We get a Value representing speed without explicitly creating it.
 
 ## Instead of declaring the whole Value each time, we can use Value templates from the builtin enums DerivedUnits and DerivedQuantities
+
+DerivedUnits
+
+1. Hertz
+2. Newtons
+3. Pascals
+4. Joules
+5. Watts
+6. Volts
+7. Coulombs
+8. Sieverts
+
+Derived Quantities
+
+1. Speed
+2. Velocity
+3. Acceleration
+4. Area
+5. Volume
+6. Mass
+7. Force
+8. Time
+9. Scalar
+10. Distance
+
 ### The get_value function returns a Value type, and the set_magnitude function changes the magnitude.
 ```
 let force = DerivedQuantities::Force.get_value().set_magnitude(15_f64);
