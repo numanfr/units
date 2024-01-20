@@ -1,7 +1,7 @@
 # Rust physics Engine
 
 ## Enum of SI Units
-### Prevents misspelling and increases code readability
+Prevents misspelling and increases code readability
 
 1. Metre
 2. Second
@@ -19,7 +19,7 @@ println!("A minute is aproximately 60 {}s",SiUnit::Second);
 ```
 
 ## The Value struct
-### Create a struct that holds an f64 and two vectors of SI Units one for the numerator and the other for the denominator
+Create a struct that holds an f64 and two vectors of SI Units one for the numerator and the other for the denominator
 
 ``` rust
 let fast = Value{magnitude: 10_f64,si_units_num: Vec::from([SiUnit::Metre]),si_units_den: Vec::from([SiUnit::Second,SiUnit::Second])};
@@ -32,7 +32,7 @@ println!("{}",fast.clone()+slow.clone());
 ```
 
 ### Multiply values
-#### Note the units change when preforming multiplication
+Note the units change when preforming multiplication
 ``` rust
 println!("{}",fast.clone() * slow.clone());
 ```
@@ -49,7 +49,7 @@ println!("Speed is {}",speed);
 We get a Value representing speed without explicitly creating it.
 
 ## DerivedUnits and DerivedQuantities
-### Instead of declaring the whole Value each time, we can use Value templates from the builtin enums DerivedUnits and DerivedQuantities
+Instead of declaring the whole Value each time, we can use Value templates from the builtin enums DerivedUnits and DerivedQuantities
 
 Derived Units
 
@@ -75,7 +75,8 @@ Derived Quantities
 9. Scalar
 10. Distance
 
-### The get_value function returns a Value type, and the set_magnitude function changes the magnitude.
+### The get_value function
+The get_value function returns a Value type, and the set_magnitude function changes the magnitude.
 ``` rust
 let force = DerivedQuantities::Force.get_value().set_magnitude(15_f64);
 let pressure = DerivedUnit::Pascals.get_value().set_magnitude(5_f64);
@@ -84,12 +85,13 @@ let area = force/pressure;
 
 println!("{}",area);
 ```
-
-### We can also check if the Value we get is indeed an area by comapring it with the builtin Area template using the same() function
+### The same() function
+We can also check if the Value we get is indeed an area by comapring it with the builtin Area template using the same() function
 
 assert!(area.same(&DerivedQuantities::Area.get_value()));
 
-## You can also use some of the built in physical constants
+## SI Constants
+You can also use some of the built in physical constants
 ``` rust
 let g =  SiConstant::GravitationalConstant.get_value();
 let c = SiConstant::SpeedOfLight.get_value();
@@ -97,9 +99,9 @@ let c = SiConstant::SpeedOfLight.get_value();
 println!("Gravitational Constant is {}",g);
 println!("Soeed of light is {}",c);
 ```
-
-### We can derive earth's acceleration due to gravity using earth's mass, radius, and the gravitational constant.
-#### g = Gm/(r^2) where g is the acceleration, G is the gravitational constant, m is the mass, r is the radius.
+## Examples
+We can derive earth's acceleration due to gravity using earth's mass, radius, and the gravitational constant.
+g = Gm/(r^2) where g is the acceleration, G is the gravitational constant, m is the mass, r is the radius.
 ``` rust
 let earth_mass = DerivedQuantities::Mass.get_value().set_magnitude(5.972e24);
 let earth_radius = DerivedQuantities::Distance.get_value().set_magnitude(6371e3);
@@ -111,8 +113,8 @@ assert!(acc.same(&DerivedQuantities::Acceleration.get_value()));
 
 println!("{}",acc);
 ```
-
-## We can also represent physical vectors that contain direction
+## Vectors
+We can also represent physical vectors that contain direction
 ``` rust
 let v = Vector{value: DerivedQuantities::Force.get_value(),theta: PI};
 println!("{}",v);
