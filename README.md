@@ -1,6 +1,6 @@
 # Rust physics Engine
 
-## Enum of si units
+## Enum of SI Units
 ### Prevents misspelling and increases code readability
 
 1. Metre
@@ -18,8 +18,8 @@ println!("An apple is aproximately 1 {}",SiUnit::Kilogram);
 println!("A minute is aproximately 60 {}s",SiUnit::Second);
 ```
 
-## Not enough
-### Create a struct that holds an f64 and two vectors of si units one for the numerator and the other for the denominator
+## The Value struct
+### Create a struct that holds an f64 and two vectors of SI Units one for the numerator and the other for the denominator
 
 ``` rust
 let fast = Value{magnitude: 10_f64,si_units_num: Vec::from([SiUnit::Metre]),si_units_den: Vec::from([SiUnit::Second,SiUnit::Second])};
