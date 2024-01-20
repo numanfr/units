@@ -48,7 +48,8 @@ println!("Speed is {}",speed);
 ```
 We get a Value representing speed without explicitly creating it.
 
-## Instead of declaring the whole Value each time, we can use Value templates from the builtin enums DerivedUnits and DerivedQuantities
+## DerivedUnits and DerivedQuantities
+### Instead of declaring the whole Value each time, we can use Value templates from the builtin enums DerivedUnits and DerivedQuantities
 
 Derived Units
 
